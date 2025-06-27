@@ -22,24 +22,35 @@ requirements:
   host:
     - python
     - pip
-    - mysql-devel
+    - mysql-devel >=9.3.0
     - setuptools >=61
+    - wheel
   run:
     - python
-    - mysql-devel
+    - mysql-devel >=9.3.0
 
 test:
   imports:
     - MySQLdb
     - MySQLdb.constants
     - MySQLdb.cursors
+  requires:
+    - pip
+  commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
 
 about:
   home: https://github.com/PyMySQL/mysqlclient-python
-  doc_url: https://mysqlclient.readthedocs.io/
   license: GPL-2.0-or-later
+  license_family: GPL
   license_file: LICENSE
   summary: Python interface to MySQL
+  description: |
+    MySQLdb is an interface to the popular MySQL or MariaDB database servers that
+    provides the Python database API.
+  doc_url: https://mysqlclient.readthedocs.io
+  dev_url: https://github.com/PyMySQL/mysqlclient/tree/v2.2.7
 
 extra:
   recipe-maintainers:
