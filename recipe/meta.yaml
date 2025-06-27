@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
   skip: true  # [py<38 or win]
 
 requirements:
@@ -49,7 +49,7 @@ about:
   description: |
     MySQLdb is an interface to the popular MySQL or MariaDB database servers that
     provides the Python database API.
-  doc_url: https://mysqlclient.readthedocs.io
+  doc_url: https://mysqlclient.readthedocs.io/
   dev_url: https://github.com/PyMySQL/mysqlclient/tree/v2.2.7
 
 extra:
