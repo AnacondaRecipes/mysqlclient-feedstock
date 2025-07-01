@@ -29,16 +29,38 @@ requirements:
     - python
     - mysql-devel >=9.3.0
 
+# Tests require connection: Can't connect to local MySQL server through socket '/tmp/mysql.sock'
+{% set ignore_tests = "" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_MySQLdb_capabilities.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_MySQLdb_dbapi20.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_connection.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_cursor.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_errors.py" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_affected_rows" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_charset_name" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_client_flag" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_context_manager" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_fileno" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_host_info" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_proto_info" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_server_info" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::CoreAPI::test_thread_id" %}
+{% set ignore_tests = ignore_tests + " --deselect=tests/test_MySQLdb_nonstandard.py::TestCollation::test_charset_collation" %}
+
 test:
+  source_files:
+    - tests
   imports:
     - MySQLdb
     - MySQLdb.constants
     - MySQLdb.cursors
   requires:
     - pip
+    - pytest
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -vv {{ ignore_tests }} tests
 
 about:
   home: https://github.com/PyMySQL/mysqlclient-python
@@ -49,8 +71,8 @@ about:
   description: |
     MySQLdb is an interface to the popular MySQL or MariaDB database servers that
     provides the Python database API.
-  doc_url: https://mysqlclient.readthedocs.io/
-  dev_url: https://github.com/PyMySQL/mysqlclient/tree/v2.2.7
+  doc_url: https://mysqlclient.readthedocs.io
+  dev_url: https://github.com/PyMySQL/mysqlclient
 
 extra:
   recipe-maintainers:
