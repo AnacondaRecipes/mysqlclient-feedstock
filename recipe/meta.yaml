@@ -27,7 +27,6 @@ requirements:
     - wheel
   run:
     - python
-    - mysql-devel
 
 # Tests require connection: Can't connect to local MySQL server through socket '/tmp/mysql.sock'
 {% set ignore_tests = "" %}
