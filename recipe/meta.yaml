@@ -49,6 +49,12 @@ requirements:
 test:
   source_files:
     - tests
+  files:
+#    - start_server.sh
+    - run_test2.sh
+    - run_test3.sh
+    - run_test4.sh
+    - mysql_test_db.cnf
   imports:
     - MySQLdb
     - MySQLdb.constants
@@ -56,10 +62,17 @@ test:
   requires:
     - pip
     - pytest
+    - mysql-server
+    - mysql-client # for mysqladmin
+  
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest -vv {{ ignore_tests }} tests
+    - bash run_test4.sh
+# The test commands are moved to run_test.sh    
+    #- mysql.server start
+#    - ./start_server.sh
+#    - pytest -vv {{ ignore_tests }} tests
 
 about:
   home: https://github.com/PyMySQL/mysqlclient-python
