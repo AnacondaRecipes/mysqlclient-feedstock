@@ -50,11 +50,7 @@ test:
   source_files:
     - tests
   files:
-#    - start_server.sh
     - run_client_tests.sh
-    - run_test2.sh
-    - run_test3.sh
-    - run_test4.sh
     - mysql_test_db.cnf
   imports:
     - MySQLdb
