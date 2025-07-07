@@ -51,6 +51,7 @@ test:
     - tests
   files:
 #    - start_server.sh
+    - run_client_tests.sh
     - run_test2.sh
     - run_test3.sh
     - run_test4.sh
@@ -68,7 +69,7 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - bash run_test4.sh
+    - bash run_client_tests.sh
 # The test commands are moved to run_test.sh    
     #- mysql.server start
 #    - ./start_server.sh

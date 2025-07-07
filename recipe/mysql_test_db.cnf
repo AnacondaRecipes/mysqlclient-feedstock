@@ -1,13 +1,3 @@
-#[mysqld]
-#host = 127.0.0.1
-#port = 3306
-#user = root
-#database = mysqldb_test
-#password = root
-#default-character-set = utf8mb4
-#datadir = ./data
-
-
 [MySQLdb-tests]
 host = 127.0.0.1
 port = 33071
@@ -16,8 +6,3 @@ database = test
 #password = root
 default-character-set = utf8mb4
 datadir = /tmp/mysql93build/data
-#socket = /tmp/mysql93build/mysql.sock
-
-
-#/tmp/mysql93build/mysql.pid --port=33071
-# mysqld --user=root --datadir=/tmp/mysql93build/data --socket=/tmp/mysql93build/mysql.sock --pid-file=/tmp/mysql93build/mysql.pid --port=33071 &

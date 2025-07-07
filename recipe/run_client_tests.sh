@@ -1,25 +1,40 @@
-#!/bin/bash
+#!/bin/bash -ex
 
-set -euxo pipefail
+# Function to cleanup MySQL server
+cleanup() {
+    echo "Shutting down MySQL server..."
+    mysqladmin -u root shutdown
+    rm -rf /tmp/mysqlclienttest
+    #mysql -u root -e "SHUTDOWN;"
+    #mysql.server stop
+    #rm -rf /tmp/mysqlclienttest
+}
 
-# Can't use local path:
-# [ERROR] [MY-010267] [Server] The socket file path is too long (> 103): /private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_ectvkej3sa/croot/mysql-suite_1750671432327/test_tmp/mysql.sock
-mkdir -p /tmp/mysql93build
+# Set trap to call cleanup function on script exit
+#trap cleanup EXIT
+trap 'mysqladmin -u root shutdown || true; rm -rf /tmp/mysqlclienttest' EXIT
 
-trap 'mysqladmin --socket=/tmp/mysql93build/mysql.sock -u root shutdown || true; rm -rf /tmp/mysql93build' EXIT
+# Initialize
+mkdir -p /tmp/mysqlclienttest/data
+mysqld --initialize-insecure --datadir=/tmp/mysqlclienttest/data
 
-echo "===DATABASE TEST START==="
-echo "---INITIALIZING DATABASE---"
-mysqld --initialize-insecure --datadir=/tmp/mysql93build/data --socket=/tmp/mysql93build/mysql.sock
-echo "---STARTING SERVER---"
-mysqld --user=root --datadir=/tmp/mysql93build/data --socket=/tmp/mysql93build/mysql.sock --pid-file=/tmp/mysql93build/mysql.pid --port=33071 &
-echo "---WAITING FOR SERVER---"
-for i in {1..10}; do
-    if mysqladmin --socket=/tmp/mysql93build/mysql.sock -u root ping &> /dev/null; then
-        break
-    fi
-    sleep 1
-done
-echo "---TRYING MYSQL-CONNECTOR-PYTHON---"
-$PYTHON database_test.py /tmp/mysql93build/mysql.sock
-echo "===DATABASE TEST END==="
+# Create error log
+touch ./data/error.log
+
+# Start server
+mysqld --user=root --datadir=/tmp/mysqlclienttest/data --pid-file=/tmp/mysqlclienttest/mysql.pid --port=33071 &
+
+sleep 3
+
+# Create database for testing
+mysql -u root -e "CREATE DATABASE test;"
+
+# Run client tests:
+#   Create client configuration
+mv mysql_test_db.cnf tests/mysql_test_db.cnf
+#   Point tests to the configuration file
+export TESTDB=mysql_test_db.cnf
+#   Run the tests
+pytest -vv tests
+
+sleep 3
