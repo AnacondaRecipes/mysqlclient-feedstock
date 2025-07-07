@@ -70,10 +70,7 @@ test:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - bash run_client_tests.sh
-# The test commands are moved to run_test.sh    
-    #- mysql.server start
-#    - ./start_server.sh
-#    - pytest -vv {{ ignore_tests }} tests
+    # The test commands are moved to run_test.sh
 
 about:
   home: https://github.com/PyMySQL/mysqlclient-python

@@ -5,13 +5,9 @@ cleanup() {
     echo "Shutting down MySQL server..."
     mysqladmin -u root shutdown
     rm -rf /tmp/mysqlclienttest
-    #mysql -u root -e "SHUTDOWN;"
-    #mysql.server stop
-    #rm -rf /tmp/mysqlclienttest
 }
 
 # Set trap to call cleanup function on script exit
-#trap cleanup EXIT
 trap 'mysqladmin -u root shutdown || true; rm -rf /tmp/mysqlclienttest' EXIT
 
 # Initialize
