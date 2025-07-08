@@ -8,6 +8,8 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 24ae22b59416d5fcce7e99c9d37548350b4565baac82f95e149cac6ce4163845
+  patches:
+    - patches/0001_use_prefix_for_dependency_paths.patch  # [win]
 
 build:
   number: 0
