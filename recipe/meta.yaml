@@ -28,6 +28,8 @@ requirements:
     - mysql-devel
     - setuptools >=61
     - wheel
+    # used in place of mariadbclient for Windows platform
+    - mysql-client  # [win]
   run:
     - python
 
