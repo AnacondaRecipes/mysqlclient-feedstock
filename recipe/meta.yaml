@@ -13,7 +13,8 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
+  script: ls {{ PREFIX }}/include & {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv  # [not win]
+  script: dir {{ PREFIX }}\include & {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv  # [win]
   skip: true  # [py<38]
 
 requirements:
