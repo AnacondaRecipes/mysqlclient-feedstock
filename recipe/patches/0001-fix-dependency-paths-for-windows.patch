@@ -1,14 +1,5 @@
-From 65bd0259e2cc74377d9d9be7788915e236de2f4d Mon Sep 17 00:00:00 2001
-From: TS-ANC <208963744+TS-ANC@users.noreply.github.com>
-Date: Tue, 8 Jul 2025 15:13:54 +0200
-Subject: [PATCH] fix dependency paths for windows
-
----
- setup.py | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
-
 diff --git a/setup.py b/setup.py
-index 9a1d26b..580b46b 100644
+index 9a1d26b..2ff9cf7 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -84,11 +84,7 @@ def get_config_posix(options=None):
@@ -20,10 +11,7 @@ index 9a1d26b..580b46b 100644
 -        connector = os.path.join(
 -            os.environ["ProgramFiles"], "MariaDB", "MariaDB Connector C"
 -        )
-+    connector = os.environ.get("PREFIX")
++    connector = os.environ.get("LIBRARY_LIB")
  
      extra_objects = []
  
--- 
-2.39.5 (Apple Git-154)
-
