@@ -22,7 +22,7 @@ touch ./data/error.log
 # Start server
 mysqld --user=root --datadir=/tmp/mysqlclienttest/data --pid-file=/tmp/mysqlclienttest/mysql.pid --port=33071 &
 
-sleep 3
+mysqladmin ping
 
 # Create database for testing
 mysql -u root -e "CREATE DATABASE test;"
@@ -30,9 +30,5 @@ mysql -u root -e "CREATE DATABASE test;"
 # Run client tests:
 #   Create client configuration
 mv mysql_test_db.cnf tests/mysql_test_db.cnf
-#   Point tests to the configuration file
-export TESTDB=mysql_test_db.cnf
-#   Run the tests
-pytest -vv tests
-
-sleep 3
+#   Point the tests to the configuration file and run the tests
+TESTDB=mysql_test_db.cnf pytest -vv tests
