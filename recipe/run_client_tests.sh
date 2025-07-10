@@ -31,5 +31,4 @@ mysql -u root -e "CREATE DATABASE test;"
 #   Create client configuration
 mv mysql_test_db.cnf tests/mysql_test_db.cnf
 #   Point the tests to the configuration file and run the tests
-TESTDB="mysql_test_db.cnf"
-pytest -vv tests
+(TESTDB="mysql_test_db.cnf"; pytest -vv tests)
