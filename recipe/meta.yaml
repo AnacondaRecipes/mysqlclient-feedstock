@@ -30,6 +30,7 @@ requirements:
     - python
 
 # Tests require connection: Can't connect to local MySQL server through socket '/tmp/mysql.sock'
+# This can be used to run only tests which don't require connection: "pytest -vv {{ ignore_tests }} tests"
 {% set ignore_tests = "" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_MySQLdb_capabilities.py" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_MySQLdb_dbapi20.py" %}

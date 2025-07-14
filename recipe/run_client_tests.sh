@@ -27,6 +27,8 @@ mysqladmin ping
 # Create database for testing
 mysql -u root -e "CREATE DATABASE test;"
 
+mysqladmin ping
+
 # Run client tests:
 #   Create client configuration
 mv mysql_test_db.cnf tests/mysql_test_db.cnf
