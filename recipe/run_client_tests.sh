@@ -22,12 +22,11 @@ touch ./data/error.log
 # Start server
 mysqld --user=root --datadir=/tmp/mysqlclienttest/data --pid-file=/tmp/mysqlclienttest/mysql.pid --port=33071 &
 
-mysqladmin ping
+#mysqladmin ping
+sleep 3 # Required on linux CI
 
 # Create database for testing
 mysql -u root -e "CREATE DATABASE test;"
-
-mysqladmin ping
 
 # Run client tests:
 #   Create client configuration
