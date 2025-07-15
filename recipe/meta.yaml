@@ -23,7 +23,7 @@ requirements:
   host:
     - python
     - pip
-    - mysql-devel ==9.3.0
+    - mysql-devel {{ mysql_libs }}
     - setuptools >=61
     - wheel
   run:
