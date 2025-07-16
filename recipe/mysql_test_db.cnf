@@ -1,0 +1,7 @@
+[MySQLdb-tests]
+host = 127.0.0.1
+port = 33071
+user = root
+database = test
+default-character-set = utf8mb4
+datadir = /tmp/mysql93build/data

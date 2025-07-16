@@ -1,43 +1,62 @@
 {% set name = "mysqlclient" %}
-{% set version = "2.0.3" %}
+{% set version = "2.2.7" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f6ebea7c008f155baeefe16c56cd3ee6239f7a5a9ae42396c2f1860f08a7c432
+  url: https://github.com/PyMySQL/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 518f256556b518bd947cdd682b4d7c2263427588296e77cc1f30e5b95f5be13f
 
 build:
-  number: 1
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
-  skip: true  # [win]
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
+  # Skipping Windows due to build challenges, reliance on mariadbclient which is not available
+  skip: true  # [py<38 or win]
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+    - pkg-config
   host:
     - python
     - pip
-    - mysql-connector-c
+    - mysql-devel {{ mysql_libs }}
+    - setuptools >=61
+    - wheel
   run:
     - python
-    - mysql-connector-c
 
 test:
+  source_files:
+    - tests
+  files:
+    - mysql_test_db.cnf
   imports:
     - MySQLdb
     - MySQLdb.constants
     - MySQLdb.cursors
+  requires:
+    - pip
+    - pytest
+    - mysql-server
+    - mysql-client # for mysqladmin
+  # Test commands moved to run_tests.sh
 
 about:
   home: https://github.com/PyMySQL/mysqlclient-python
-  doc_url: https://mysqlclient.readthedocs.io/
   license: GPL-2.0-or-later
+  license_family: GPL
   license_file: LICENSE
   summary: Python interface to MySQL
+  description: |
+    MySQLdb is an interface to the popular MySQL or MariaDB database servers that
+    provides the Python database API.
+  doc_url: https://mysqlclient.readthedocs.io
+  dev_url: https://github.com/PyMySQL/mysqlclient
 
 extra:
   recipe-maintainers:
