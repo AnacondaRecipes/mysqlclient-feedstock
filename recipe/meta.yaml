@@ -10,7 +10,8 @@ source:
   sha256: b9de84686fa6bfc3c876aab075e92097bd79e71b457d08eb7510c0df009db96a
 
 build:
-  number: 0
+  number: 1
+  # Rebuild against mysql-libs 9.7 (PKG-17676)
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
   # Skipping Windows due to build challenges, reliance on mariadbclient which is not available
   skip: true  # [py<310 or win]
