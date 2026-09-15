@@ -1,5 +1,5 @@
 {% set name = "mysqlclient" %}
-{% set version = "2.2.8" %}
+{% set version = "2.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/PyMySQL/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: b9de84686fa6bfc3c876aab075e92097bd79e71b457d08eb7510c0df009db96a
+  sha256: 211e37a33144ebd6f5222a592b84d873a7d38d6ee2764e858a7255aa890ed84a
 
 build:
-  number: 1
+  number: 0
   # Rebuild against mysql-libs 9.7 (PKG-17676)
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
   # Skipping Windows due to build challenges, reliance on mariadbclient which is not available
@@ -26,8 +26,7 @@ requirements:
     - python
     - pip
     - mysql-devel {{ mysql_libs }}
-    - setuptools >=61
-    - wheel
+    - setuptools >=77
   run:
     - python
 
@@ -44,8 +43,10 @@ test:
     - pip
     - pytest
     - mysql-server
-    - mysql-client # for mysqladmin
+    - mysql-client  # for mysqladmin
   # Test commands moved to run_tests.sh
+  commands:
+    - pip check
 
 about:
   home: https://github.com/PyMySQL/mysqlclient-python
