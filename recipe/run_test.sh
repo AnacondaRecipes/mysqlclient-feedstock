@@ -22,19 +22,11 @@ mysqld --initialize-insecure --datadir=/tmp/mysqlclienttest/data
 # Create error log
 touch /tmp/mysqlclienttest/data/error.log
 
-# # Start server
-# mysqld --user=root --datadir=/tmp/mysqlclienttest/data --pid-file=/tmp/mysqlclienttest/mysql.pid --port=33071 &
+# Start server
+mysqld --user=root --datadir=/tmp/mysqlclienttest/data --pid-file=/tmp/mysqlclienttest/mysql.pid --port=33071 &
 
-# #mysqladmin ping
-# sleep 3 # Required on linux CI
-
-for i in $(seq 1 60); do
-    if mysqladmin -u root --socket=/tmp/mysql.sock ping --silent 2>/dev/null; then
-        echo "MySQL is up"
-        break
-    fi
-    sleep 1
-done
+#mysqladmin ping
+sleep 3 # Required on linux CI
 
 # Create database for testing
 mysql -u root -e "CREATE DATABASE test;"
