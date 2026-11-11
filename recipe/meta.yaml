@@ -1,5 +1,5 @@
 {% set name = "mysqlclient" %}
-{% set version = "2.3.0" %}
+{% set version = "2.3.1" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/PyMySQL/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 211e37a33144ebd6f5222a592b84d873a7d38d6ee2764e858a7255aa890ed84a
+  sha256: 1890eb4ed2e667a7f2dc2fca922b84937ccf61ef9faf2bdc48f739e36bb2daf8
 
 build:
   number: 0
