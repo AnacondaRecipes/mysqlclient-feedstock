@@ -11,6 +11,7 @@ source:
 
 build:
   number: 0
+  # Rebuild against mysql-libs 9.7 (PKG-17676)
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
   # Skipping Windows due to build challenges, reliance on mariadbclient which is not available
   skip: true  # [py<310 or win]
@@ -43,7 +44,7 @@ test:
     - pytest
     - mysql-server
     - mysql-client  # for mysqladmin
-  # Test commands (pytest -vv tests) run from run_test.sh
+  # Test commands moved to run_tests.sh
   commands:
     - pip check
 
